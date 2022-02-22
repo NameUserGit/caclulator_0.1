@@ -1,4 +1,4 @@
-import seconf_back_clcltr
+import three_back_clcltr
 from tkinter import *
 
 
@@ -9,7 +9,7 @@ class Application(Frame):
         self.tk.title('GUI clcltr L')
         self.tk.geometry('223x182')
         super(Application, self).__init__(self.tk)
-        self.bc = seconf_back_clcltr.Collection_data()
+        self.bc = three_back_clcltr.Collection_data()
         self.grid()
         self.element_grafic_interface()
         
@@ -107,7 +107,7 @@ class Application(Frame):
         
         Button(self,
                text=' * ',
-               command = lambda:[self.bc.multiplication(), self.mapper_text()],
+               command = lambda:[self.bc.miltiplication(), self.mapper_text()],
                width=2
                ).grid(row=2,
                       column=4)
