@@ -120,47 +120,8 @@ class Action():
                 self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list].insert(index_main_open_bracket, result)
 
             if not self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1]:
-                self.list_nubmer_and_brackets_open.pop(len(self.list_nubmer_and_brackets_open)-1)
-
-            
+                self.list_nubmer_and_brackets_open.pop(len(self.list_nubmer_and_brackets_open)-1)            
         
-        
-            
-            
-            
-            
-
-        '''elif len(self.list_nubmer_and_brackets_open) == 1:
-            
-                
-        elif self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list]:
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list].insert(index_operator, result)
-            else:
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].pop(index_list)
-                index_main_open_bracket = 0
-                number_open_bracket = 0
-                while number_open_bracket != index_list + 1:
-                    if self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list][index_main_open_bracket] == '(':
-                        number_open_bracket += 1
-                        if number_open_bracket != index_list + 1:
-                            break 
-                    index_main_open_bracket += 1
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list].pop(index_main_open_bracket)
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list].insert(index_main_open_bracket, result)
-
-        else:
-            self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].insert(index_operator, result)
-
-        '''
-            
-        
-
-              
-                        
-                        
-                        
-                
-                
 class Collection_data():
 
     def __init__(self):
@@ -322,6 +283,14 @@ class Collection_data():
             simvols += i
             
         return simvols
+
+
+
+
+
+if __name__ == '__main__':
+    print('You open modul back')
+    input('Clicks Enter the end')
         
         
             
