@@ -1,127 +1,5 @@
-class Action():
+import ravno_result
 
-    def __init__(self, list_nubmer_and_brackets_open, list_level_miltiplication_division, list_level_plus_minus, list_level_all_operators):
-
-        #get list 
-        self.list_nubmer_and_brackets_open = list_nubmer_and_brackets_open
-        self.list_level_miltiplication_division = list_level_miltiplication_division
-        self.list_level_plus_minus = list_level_plus_minus
-        self.list_level_all_operators = list_level_all_operators
-        #########
-
-    def functyon(self, operator, num1, num2):
-        if operator == '+':
-            result = num1 + num2
-        elif operator == '-':
-            result = num1 - num2
-        elif operator == '*':
-            result = num1 * num2
-        elif operator == '/':
-            result = num1 / num2
-
-        return result
-
-    def first_action(self):
-
-        if len(self.list_nubmer_and_brackets_open) == 1 and len(self.list_nubmer_and_brackets_open[0]) == 1:
-            print('stop!')
-        else:
-            operator = None
-            
-            while operator == None:
-                if self.list_level_miltiplication_division[len(self.list_level_miltiplication_division)-1]:
-                    operator = self.list_level_miltiplication_division[len(self.list_level_miltiplication_division)-1].pop(0)
-                elif self.list_level_plus_minus[len(self.list_level_plus_minus)-1]:
-                    operator = self.list_level_plus_minus[len(self.list_level_plus_minus)-1].pop(0)
-                elif len(self.list_level_miltiplication_division) != 1 and len(self.list_level_plus_minus) != 1:
-                    self.list_level_miltiplication_division.pop(len(self.list_level_miltiplication_division)-1)
-                    self.list_level_plus_minus.pop(len(self.list_level_plus_minus)-1)
-                    
-                    
-
-            index_operator = None
-            index_list = 0
-                
-            if len(self.list_level_all_operators) == 1:
-                index_operator = self.list_level_all_operators[len(self.list_level_all_operators)-1].index(operator)
-                self.list_level_all_operators[len(self.list_level_all_operators)-1].pop(index_operator)
-                                
-            else:
-                while index_operator == None:
-                
-                    if operator in self.list_level_all_operators[len(self.list_level_all_operators)-1][index_list]:
-                        index_operator = self.list_level_all_operators[len(self.list_level_all_operators)-1][index_list].index(operator)
-                        break
-                    
-                    index_list += 1
-                    
-                self.list_level_all_operators[len(self.list_level_all_operators)-1][index_list].pop(index_operator)
-                if not self.list_level_all_operators[len(self.list_level_all_operators)-1][index_list]:
-                    self.list_level_all_operators[len(self.list_level_all_operators)-1].pop(index_list)
-                    
-                if not self.list_level_all_operators[len(self.list_level_all_operators)-1]:
-                    self.list_level_all_operators.pop(len(self.list_level_all_operators)-1)
-                
-                    
-            print('index_list', index_list)            
-            print('index_operator',index_operator)
-            
-            num1 = None
-            num2 = None
-
-            if len(self.list_nubmer_and_brackets_open) == 1:
-                num1 = self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].pop(index_operator)
-                num2 = self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].pop(index_operator)
-
-            else:
-                num1 = self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list].pop(index_operator)
-                num2 = self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list].pop(index_operator)
-
-            print('operator' , operator)
-            print('num1' , num1)
-            print('num2' , num2)
-            result = self.functyon(operator, num1, num2)
-            print('result' , result)
-
-
-            if len(self.list_nubmer_and_brackets_open) == 1:
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].insert(index_operator, result)
-                
-            elif len(self.list_nubmer_and_brackets_open) == 2 and not self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list]:
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].pop(index_list)
-                index_main_open_bracket = 0
-                number_open_bracket = 0
-                while number_open_bracket != index_list + 1:
-                    if self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_main_open_bracket] == '(':
-                        number_open_bracket += 1
-                    if number_open_bracket == index_list + 1:
-                        break
-                    index_main_open_bracket += 1
-                print(index_main_open_bracket)
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2].pop(index_main_open_bracket)
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2].insert(index_main_open_bracket, result)
-                
-            elif self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list]:
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list].insert(index_operator, result)
-            elif not self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1][index_list]:
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1].pop(index_list)
-                
-                index_main_open_bracket = 0
-                number_open_bracket = 0
-                
-                while number_open_bracket != index_list + 1:
-                    print('~~~~~~~~~~~~~~~~~~~')
-                    if self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list][index_main_open_bracket] == '(':
-                        number_open_bracket += 1
-                        if number_open_bracket == index_list + 1:
-                            break
-                    index_main_open_bracket += 1
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list].pop(index_main_open_bracket)
-                self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-2][index_list].insert(index_main_open_bracket, result)
-
-            if not self.list_nubmer_and_brackets_open[len(self.list_nubmer_and_brackets_open)-1]:
-                self.list_nubmer_and_brackets_open.pop(len(self.list_nubmer_and_brackets_open)-1)            
-        
 class Collection_data():
 
     def __init__(self):
@@ -141,8 +19,6 @@ class Collection_data():
         self.brackets_close = []
 
         self.simvols = []
-
-        self.action = None
         
     def ask_level(self):
         return len(self.brackets_open)-len(self.brackets_close)
@@ -299,18 +175,20 @@ class Collection_data():
         
 
     def ravno(self):
-        self.int_num()
-        print('\n')
-        print('num bracket' , self.list_nubmer_and_brackets_open)
-        print('m d ' , self.list_level_miltiplication_division)
-        print('p m ' , self.list_level_plus_minus)
-        print('all o', self.list_level_all_operators)
+        if self.error_input('='):
+            self.int_num()
+            print('\n')
+            print('num bracket' , self.list_nubmer_and_brackets_open)   
+            print('m d ' , self.list_level_miltiplication_division)
+            print('p m ' , self.list_level_plus_minus)
+            print('all o', self.list_level_all_operators)
+            result = ravno_result.formula(self.list_nubmer_and_brackets_open , self.list_level_miltiplication_division, self.list_level_plus_minus, self.list_level_all_operators)
+            result_str = str(result)
+            print('ravno ' , result)
 
-        if not self.action:
-            self.action = Action(self.list_nubmer_and_brackets_open, self.list_level_miltiplication_division, self.list_level_plus_minus, self.list_level_all_operators)
-
-        self.action.first_action()
-                
+            self.list_all_simvols.append(' = ')
+            self.list_all_simvols.append(result_str)
+        
     def print_simvols(self):
         simvols = ''
         for i in self.list_all_simvols:
@@ -334,7 +212,7 @@ class Collection_data():
             if not len(self.list_for_error_input):
                 resolution = True
 
-            elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /':
+            elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and not self.simvols:
                 resolution = True
             
             elif self.list_for_error_input[len(self.list_for_error_input)-1] == '(':
@@ -342,13 +220,13 @@ class Collection_data():
 
         elif element == ')':
             if len(self.list_for_error_input):
-                if len(self.brackets_open) - len(self.brackets_close) != 0 and self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols:
+                if len(self.brackets_open) - len(self.brackets_close) != 0 and self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols and self.simvols[0] != '.':
                     resolution = True
                 elif self.list_for_error_input[len(self.list_for_error_input)-1] == ')' and len(self.brackets_open) - len(self.brackets_close) != 0:
                     resolution = True
                 
         elif element in  '+ - * /':
-            if not len(self.list_for_error_input) and self.simvols:
+            if not len(self.list_for_error_input) and  self.simvols and self.simvols[0] != '.':
                     resolution = True
             
             elif len(self.list_for_error_input):
@@ -359,6 +237,18 @@ class Collection_data():
         elif element == '.':
             if '.' not in self.simvols:
                 resolution = True
+
+        elif element == '=':
+            if self.list_for_error_input:
+                if self.list_for_error_input[len(self.list_for_error_input)-1] == ')'  and len(self.brackets_open) - len(self.brackets_close) == 0:
+                    resolution = True
+                elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols and self.simvols[0] != '.':
+                    resolution = True
+            
+                
+            #if len(self.brackets_open) - len(self.brackets_close) == 0 and self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols
+            #if self.list_for_error_input[len(self.list_for_error_input)-1]
+            
                 
         return resolution 
 
