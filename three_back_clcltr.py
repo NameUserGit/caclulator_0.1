@@ -1,5 +1,5 @@
 import ravno_result
-import delete_last_ection as dle
+#import delete_last_ection as dle
 
 
 class Collection_data():
