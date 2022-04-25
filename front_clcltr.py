@@ -127,12 +127,14 @@ class Application(Frame):
         ######### <- ##########
         Button(self,
                text=' <- ',
+               command = lambda:[self.bc.delete_last_ection(), self.mapper_text()],
                width=2
                ).grid(row=4,
                       column=3)
          ######### C ##########
         Button(self,
                text=' C ',
+               command = lambda:[self.bc.clear(), self.mapper_text()],
                width=2
                ).grid(row=4,
                       column=4)

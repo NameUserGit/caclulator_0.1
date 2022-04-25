@@ -1,4 +1,6 @@
 import ravno_result
+import delete_last_ection as dle
+
 
 class Collection_data():
 
@@ -177,18 +179,86 @@ class Collection_data():
     def ravno(self):
         if self.error_input('='):
             self.int_num()
-            print('\n')
-            print('num bracket' , self.list_nubmer_and_brackets_open)   
-            print('m d ' , self.list_level_miltiplication_division)
-            print('p m ' , self.list_level_plus_minus)
-            print('all o', self.list_level_all_operators)
             result = ravno_result.formula(self.list_nubmer_and_brackets_open , self.list_level_miltiplication_division, self.list_level_plus_minus, self.list_level_all_operators)
             result_str = str(result)
             print('ravno ' , result)
 
             self.list_all_simvols.append(' = ')
             self.list_all_simvols.append(result_str)
+
+            self.clear_ravno()
+
+            
+            
+######################################################################
+##########################CLEAR#######################################
+    def clear(self):
+
+        ##########ERROR_INPUT###########
+        self.list_for_error_input = []##
+        ################################
         
+        self.list_all_simvols = []
+        
+        self.list_nubmer_and_brackets_open = [[]]
+        self.list_level_miltiplication_division = [[]]
+        self.list_level_plus_minus = [[]]
+        self.list_level_all_operators =  [[]]
+        
+        self.brackets_open = []
+        self.brackets_close = []
+
+        self.simvols = []
+
+    def clear_ravno(self):
+        
+        ##########ERROR_INPUT###########
+        self.list_for_error_input = []##
+        ################################
+ 
+        self.list_nubmer_and_brackets_open = [[]]
+        self.list_level_miltiplication_division = [[]]
+        self.list_level_plus_minus = [[]]
+        self.list_level_all_operators =  [[]]
+        
+        self.brackets_open = []
+        self.brackets_close = []
+
+        self.simvols = []
+
+    def clear_list_all_simvols(self):
+        if self.list_all_simvols:
+                if self.list_all_simvols[len(self.list_all_simvols) - 2] == ' = ':
+                    self.list_all_simvols = []
+        
+
+
+########################END CLEAR#####################################
+######################################################################
+####################DELETE_LAST_ECTION################################
+    def delete_last_ection(self):
+        self.list_all_simvols , self.list_nubmer_and_brackets_open = dle.oredelation_action(self.list_all_simvols,self.list_nubmer_and_brackets_open)
+        print(self.list_nubmer_and_brackets_open)
+        ##########ERROR_INPUT###########
+        #self.list_for_error_input = []##
+        ################################
+
+        #self.list_all_simvols = []
+        
+        #self.list_nubmer_and_brackets_open = [[]]
+        #self.list_level_miltiplication_division = [[]]
+        #self.list_level_plus_minus = [[]]
+        #self.list_level_all_operators =  [[]]
+        
+        #self.brackets_open = []
+        #self.brackets_close = []
+
+        #self.simvols = []
+        
+#################END_DELETE_LAST_ECTION###############################
+######################################################################
+
+
     def print_simvols(self):
         simvols = ''
         for i in self.list_all_simvols:
@@ -196,37 +266,60 @@ class Collection_data():
         print('simvols' , self.list_all_simvols)
         return simvols
 
+    
     def error_input(self, element):
 
         resolution = False
+            
+        print('self.list_for_error_input' , self.list_for_error_input)
         
         if element in '0 1 2 3 4 5 6 7 8 9':
+
+            self.clear_list_all_simvols()
+                
             if not len(self.list_for_error_input):
                 resolution = True
             elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /':
                 resolution = True
             elif self.list_for_error_input[len(self.list_for_error_input)-1] == '(':
                 resolution = True
-
+             
+    
         elif element == '(':
-            if not len(self.list_for_error_input):
-                resolution = True
-
-            elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and not self.simvols:
-                resolution = True
             
-            elif self.list_for_error_input[len(self.list_for_error_input)-1] == '(':
+            self.clear_list_all_simvols()
+            
+            if not len(self.list_for_error_input) and not self.simvols:
                 resolution = True
+            if self.list_for_error_input:
+                if self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and not self.simvols:
+                    resolution = True
+                
+                elif self.list_for_error_input[len(self.list_for_error_input)-1] == '(':
+                    resolution = True
 
         elif element == ')':
+            
+            self.clear_list_all_simvols()
+            
             if len(self.list_for_error_input):
-                if len(self.brackets_open) - len(self.brackets_close) != 0 and self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols and self.simvols[0] != '.':
-                    resolution = True
+                if len(self.brackets_open) - len(self.brackets_close) != 0 and self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols:
+                    if self.simvols[0] == '.' and len(self.simvols) > 1:
+                        resolution = True
+                    elif self.simvols[0] != '.':
+                        resolution = True
+                        
                 elif self.list_for_error_input[len(self.list_for_error_input)-1] == ')' and len(self.brackets_open) - len(self.brackets_close) != 0:
                     resolution = True
                 
         elif element in  '+ - * /':
-            if not len(self.list_for_error_input) and  self.simvols and self.simvols[0] != '.':
+            
+            self.clear_list_all_simvols()
+            
+            if not len(self.list_for_error_input) and self.simvols:
+                if self.simvols[0] == '.' and len(self.simvols) > 1:
+                    resolution = True
+                elif self.simvols[0] != '.':
                     resolution = True
             
             elif len(self.list_for_error_input):
@@ -235,21 +328,25 @@ class Collection_data():
                 elif self.simvols:
                     resolution = True
         elif element == '.':
+            
+            self.clear_list_all_simvols()
+            
             if '.' not in self.simvols:
                 resolution = True
 
         elif element == '=':
+            
+            self.clear_list_all_simvols()
+            
             if self.list_for_error_input:
                 if self.list_for_error_input[len(self.list_for_error_input)-1] == ')'  and len(self.brackets_open) - len(self.brackets_close) == 0:
                     resolution = True
-                elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols and self.simvols[0] != '.':
-                    resolution = True
-            
-                
-            #if len(self.brackets_open) - len(self.brackets_close) == 0 and self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols
-            #if self.list_for_error_input[len(self.list_for_error_input)-1]
-            
-                
+                elif self.list_for_error_input[len(self.list_for_error_input)-1] in '+ - * /' and self.simvols:
+                    if self.simvols[0] == '.' and len(self.simvols) > 1:
+                        resolution = True
+                    elif self.simvols[0] != '.':
+                        resolution = True
+                    
         return resolution 
 
 if __name__ == '__main__':
